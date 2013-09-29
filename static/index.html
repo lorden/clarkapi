@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.3.1/css/foundation.min.css" />
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/4.3.1/js/foundation.min.js"></script>
+    <script src="mustache.js"></script>
+    <script src="clark.js"></script>
+    <link rel="stylesheet" href="clark.css" />
+</head>
+<body>
+  <div id="dashboard">
+    <div class="row">
+      <div class="small-8 columns">
+        <div class="row" id="weather"></div>
+      </div>
+      <div class="small-4 columns last-column">
+        <div class="widget">
+          <div class="center">
+            <div id="clock"></div>
+            <div id="current-temperature"></div>
+          </div>
+          <div class="center">
+            <div id="day"></div>
+            <div id="special-day"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-6 columns first-column">
+        <div id="events" class="widget"></div>
+      </div>
+      <div class="small-6 columns last-column">
+        <div id="bus" class="widget">
+            <div id="2" class="bus_row">
+                <div class="bus_line">2</div>
+                <div class="bus_times"></div>
+                <div class="later_bus"></div>
+            </div>
+            <div id="3" class="bus_row">
+                <div class="bus_line">3</div>
+                <div class="bus_times"></div>
+                <div class="later_bus"></div>
+            </div>
+            <div id="38" class="bus_row">
+                <div class="bus_line">38</div>
+                <div class="bus_times"></div>
+                <div class="later_bus"></div>
+            </div>
+            <div id="38L" class="bus_row">
+                <div class="bus_line">38L</div>
+                <div class="bus_times"></div>
+                <div class="later_bus"></div>
+            </div>
+            <div id="47" class="bus_row">
+                <div class="bus_line">47</div>
+                <div class="bus_times"></div>
+                <div class="later_bus"></div>
+            </div>
+            <div id="49" class="bus_row">
+                <div class="bus_line">49</div>
+                <div class="bus_times"></div>
+                <div class="later_bus"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--
+    <div data-role="page" id="settings">
+        <div data-role="content" id="settings_menu">
+            <div id="settings_basic" class="settings_menu_bar" onclick="showSettingsDisplay(this)">
+                Basic
+            </div>
+            <div id="settings_calendar" class="settings_menu_bar" onclick="showSettingsDisplay(this)">
+                Calendar
+            </div>
+            <div id="settings_transportation" class="settings_menu_bar" onclick="showSettingsDisplay(this)">
+                Transportation
+            </div>
+        </div>
+        <div data-role="content" id="settings_display">
+            <div id="settings_basic_display">
+                BASIC SETTINGS CHOICES
+            </div>
+            <div id="settings_calendar_display">
+                CALENDAR SETTINGS CHOICES
+            </div>
+            <div id="settings_transportation_display">
+                TRANSPORTATION SETTINGS CHOICES
+            </div>
+        </div>
+        <div class="button-panel">
+            <button class="settings_button" onclick="showDashboard()">-</button>
+        </div>
+    </div>
+-->
+</body>
+</html>
