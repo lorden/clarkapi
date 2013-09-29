@@ -68,6 +68,7 @@ exports.getWeather = function(req, res){
             result['weather']['after_tomorrow']['image'] = 'img/' + result['weather']['after_tomorrow']['condition'].toLowerCase().replace(' ', '_') + '.png';
 
             // Send response
+            res.header("Access-Control-Allow-Origin", "*");
             res.setHeader('Content-Type', 'application/json');
             res.send(result);
 
