@@ -1,7 +1,7 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "Clark",
   "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "description": "Clark Dashboard",
   "keywords": [
     "OpenShift",
     "Node.js",
@@ -9,11 +9,10 @@
     "openshift"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url":  "http://www.openshift.com/"
+    "name": "Diego Lorden",
+    "url":  "http://www.diegolorden.com/"
   },
-  "homepage": "http://www.openshift.com/",
+  "homepage": "http://www.diegolorden.com/",
   "repository": {
     "type": "git",
     "url": "https://gitub.com/openshift/origin-server"
