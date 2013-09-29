@@ -3,6 +3,7 @@
 var express = require('express');
 var fs      = require('fs');
 var weather = require('./weather');
+var bus = require('./bus');
 
 
 /**
@@ -76,6 +77,7 @@ var SampleApp = function() {
         self.routes = { };
 
         self.routes['/weather'] = weather.getWeather;
+        self.routes['/bus'] = bus.getBuses;
 
     };
 
