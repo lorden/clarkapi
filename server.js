@@ -2,6 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var weather = require('./weather');
 
 
 /**
@@ -79,6 +80,7 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'application/json');
             res.send('{"weather": "yes"}');
         };
+        self.routes['/weather2'] = weather.getWeather;
 
     };
 
