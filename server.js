@@ -75,12 +75,7 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        // Routes for /health, /asciimo and /
-        self.routes['/weather'] = function(req, res) {
-            res.setHeader('Content-Type', 'application/json');
-            res.send('{"weather": "yes"}');
-        };
-        self.routes['/weather2'] = weather.getWeather;
+        self.routes['/weather'] = weather.getWeather;
 
     };
 
