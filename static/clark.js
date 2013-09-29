@@ -15,7 +15,7 @@ $(document).ready(function(){
     });
 });
 
-var api_url = 'http://127.0.0.1:8080';
+var api_url = '';
 
 function new_updateClock() {
     $.getJSON(api_url, function(data) {
@@ -263,7 +263,7 @@ function get_month_name(month){
 }
 
 function updateBus(){
-    $.getJSON(api_url + 'bus', function(data) {
+    $.getJSON(api_url + '/bus', function(data) {
         for (bus_line in data) {
             $('#bus .bus_row#' + data[bus_line][0] + ' .bus_times').html('')
             $('#bus .bus_row#' + data[bus_line][0] + ' .later_bus').html('&nbsp;')
