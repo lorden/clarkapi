@@ -2,8 +2,11 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var passport = require('passport');
 var weather = require('./weather');
 var bus = require('./bus');
+var calendar = require('./calendar');
+var config = require('./config');
 
 
 /**
@@ -78,6 +81,8 @@ var SampleApp = function() {
 
         self.routes['/weather'] = weather.getWeather;
         self.routes['/bus'] = bus.getBuses;
+        self.routes['/calendar'] = calendar.getCalendars;
+        self.routes['/auth'] = calendar.googleAuth;
 
     };
 
@@ -88,13 +93,28 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        self.app = express();
         self.app.use('/static', express.static(__dirname + '/static'));
+        self.app.use(passport.initialize());
+        self.app.use(express.cookieParser());
+        self.app.use(express.bodyParser());
+        self.app.use(express.session({ secret: config.session_secret }));
+
+
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
             self.app.get(r, self.routes[r]);
         }
+
+        // Special route for Google Auth callback
+        self.app.get('/auth/callback',  
+          passport.authenticate('google', { session: false, failureRedirect: '/' }), 
+            function(req, res) {  
+                req.session.access_token = req.user.accessToken; 
+                res.redirect('/calendar'); 
+          }); 
+
     };
 
 
