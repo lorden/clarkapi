@@ -27,38 +27,76 @@ exports.googleCallback = function(req, res) {
     res.redirect('/calendar'); 
 }; 
 
+function get_current_date(){
+    var d = new Date();
+    month = d.getMonth() + 1; // Months start at 0
+    month = month > 9 ? month : '0' + month;
+    date = d.getDate() > 9 ? d.getDate() : '0' + d.getDate();
+    return d.getFullYear() + '-' + month + '-' + date + 'T00:00:00.000-07:00';
+}
+
+function get_tomorrow_date(){
+    var d = +new Date(); // timestamp
+    var ts = d + 86400000; // In miliseconds
+    console.log(ts);
+    d = new Date(ts);
+    console.log(d);
+    month = d.getMonth() + 1; // Months start at 0
+    month = month > 9 ? month : '0' + month;
+    date = d.getDate() > 9 ? d.getDate() : '0' + d.getDate();
+    return d.getFullYear() + '-' + month + '-' + date + 'T00:00:00.000-07:00';
+}
+
+
+
+var get_events = function(req, res){
+    //Create an instance from accessToken
+    var accessToken = req.session.access_token;
+    var calendar_params = {
+        maxResults: 10,
+        timeMin: get_current_date(),
+        timeMax: get_tomorrow_date(),
+        // pageToken: null,
+    }
+
+
+    console.log("2 RES" + res);
+    var events = [];
+    gcal(accessToken).events.list(calendar_id, calendar_params, function(err, data) {
+        // console.log(calendar_params);
+        if(err) {
+            console.log(err);
+            return res.send(500,err);
+        }
+        if(data.items && data.items.length > 0) {
+            for(i in data.items){
+                // console.log(data.items[i]);
+                // console.log('==============================');
+                var new_event = {}
+                new_event['calendar'] = calendar_id;
+                new_event['title'] = data.items[i].summary;
+                var start = data.items[i].start.dateTime;
+                new_event['start'] = start.substring(0,10) + ' ' + start.substring(11,16);
+                var end = data.items[i].end.dateTime;
+                new_event['end'] = end.substring(0,10) + ' ' + end.substring(11,16);
+
+                // console.log(new_event);
+                events.push(new_event);
+            }
+        }
+
+        res.send(events);
+    });
+
+}
+
 exports.getCalendars = function(req, res){
     if(!req.session.access_token) {
         return res.redirect('/auth');
     }
 
-    //Create an instance from accessToken
-    var accessToken = req.session.access_token;
-
     calendar_id = config.calendars[1];
     console.log(calendar_id);
-    var result = gcal(accessToken).events.list(calendar_id, {maxResults:1}, function(err, data) {
-        var events = [];
-        if(err) return res.send(500,err);
-        var new_event = {}
-        new_event['calendar'] = calendar_id;
-        new_event['title'] = data.items[0].summary;
-        console.log(new_event);
-        events.push(new_event);
-        console.log(events);
-
-        res.header("Access-Control-Allow-Origin", "*");
-        res.setHeader('Content-Type', 'application/json');
-        return res.send(events);
-
-//        if(data.nextPageToken){
-//            console.log('NPT: ' + data.nextPageToken);
-//            google_calendar.events.list(calendar_id, {maxResults:1, pageToken:data.nextPageToken}, function(err, data) {
-//                console.log('=========');
-//                console.log('=========');
-//            });
-//        }
-    
-    });
+    get_events(req, res);
 
 }

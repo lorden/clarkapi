@@ -52,7 +52,7 @@ function updateEvents() {
         '</div>' +
         '{{ /tomorrow }}';
     
-    $.getJSON(api_url + 'calendar', function(data) {
+    $.getJSON(api_url + '/calendar', function(data) {
         events_data = {
             'today' : [],
             'tomorrow': []
