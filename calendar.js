@@ -1,7 +1,7 @@
 var http    = require('http');
 var gcal = require('google-calendar');
 var config = require('./config')
-
+console.log(config);
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var passport = require('passport');
@@ -37,7 +37,7 @@ function get_current_date(){
 
 function get_tomorrow_date(){
     var d = +new Date(); // timestamp
-    var ts = d + 86400000; // In miliseconds
+    var ts = d + 86400000 + 86400000; // In miliseconds
     console.log(ts);
     d = new Date(ts);
     console.log(d);
@@ -60,7 +60,6 @@ var get_events = function(req, res){
     }
 
 
-    console.log("2 RES" + res);
     var events = [];
     gcal(accessToken).events.list(calendar_id, calendar_params, function(err, data) {
         // console.log(calendar_params);
@@ -85,7 +84,7 @@ var get_events = function(req, res){
             }
         }
 
-        res.send(events);
+        res.send({'events': events});
     });
 
 }

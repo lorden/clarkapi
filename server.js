@@ -112,7 +112,7 @@ var SampleApp = function() {
           passport.authenticate('google', { session: false, failureRedirect: '/' }), 
             function(req, res) {  
                 req.session.access_token = req.user.accessToken; 
-                res.redirect('/calendar'); 
+                res.redirect('/static'); 
           }); 
 
     };

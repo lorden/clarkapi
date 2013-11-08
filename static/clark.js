@@ -71,7 +71,7 @@ function updateEvents() {
                 'date': '',
                 'start': '',
                 'end': '',
-                'title': e.name,
+                'title': e.title,
                 'description': '',
                 'day': ''
             }
@@ -82,7 +82,7 @@ function updateEvents() {
             } else {
                 time = ['00', '00', '00'];
             }
-            sdate = new Date(date[0], date[1] - 1, date[2], time[0], time[1], time[2]);
+            sdate = new Date(date[0], date[1] - 1, date[2], time[0], time[1]);
             if (sdate.getTime() + 1000 > today.getTime() + 172800000) {
                 // This event doesn't belong here, 2 days only
                 continue;
@@ -100,7 +100,7 @@ function updateEvents() {
             } else {
                 time = ['00', '00', '00'];
             }
-            edate = new Date(date[0], date[1] - 1, date[2], time[0], time[1], time[2]);
+            edate = new Date(date[0], date[1] - 1, date[2], time[0], time[1]);
             pedate = edate.getDate() + '/' + edate.getMonth();
             mins = edate.getMinutes() > 9 ? edate.getMinutes() : ('0' + edate.getMinutes())
             event_data.end = edate.getHours() + ':' + mins;
@@ -130,6 +130,9 @@ function updateEvents() {
         }
 
         $('#events').html(Mustache.render(event_template, events_data));
+    })
+    .fail(function(){
+        $('#events').html('<a href="/auth">Authenticate</a>');
     });
 }
 
