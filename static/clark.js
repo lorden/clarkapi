@@ -132,7 +132,13 @@ function updateEvents() {
         $('#events').html(Mustache.render(event_template, events_data));
     })
     .fail(function(){
-        $('#events').html('<a href="/auth">Authenticate</a>');
+        $('#events').html(
+            '<div class="empty-widget">' +
+                    '<a href="/auth">' +
+                        '<img src="img/calendar.png" alt="" />' +
+                        '<br/>Authenticate' +
+                    '</a>' +
+            '</div>');
     });
 }
 
