@@ -15,3 +15,5 @@ npm-debug.log
 .openshift/*
 node_modules/*
 config.js
+*.deploy
+*.swp*
