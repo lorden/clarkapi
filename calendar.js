@@ -38,9 +38,7 @@ function get_current_date(){
 function get_tomorrow_date(){
     var d = +new Date(); // timestamp
     var ts = d + 86400000 + 86400000; // In miliseconds
-    console.log(ts);
     d = new Date(ts);
-    console.log(d);
     month = d.getMonth() + 1; // Months start at 0
     month = month > 9 ? month : '0' + month;
     date = d.getDate() > 9 ? d.getDate() : '0' + d.getDate();
@@ -48,54 +46,88 @@ function get_tomorrow_date(){
 }
 
 
+var events = [];
+var total_calendars = config.calendars.length;
 
-var get_events = function(req, res){
+var get_events = function(calendar_id, req, res){
     //Create an instance from accessToken
     var accessToken = req.session.access_token;
     var calendar_params = {
         maxResults: 10,
         timeMin: get_current_date(),
         timeMax: get_tomorrow_date(),
-        // pageToken: null,
     }
 
 
-    var events = [];
+    // Get events
     gcal(accessToken).events.list(calendar_id, calendar_params, function(err, data) {
-        // console.log(calendar_params);
+    
         if(err) {
             console.log(err);
             return res.send(500,err);
         }
+
         if(data.items && data.items.length > 0) {
             for(i in data.items){
-                // console.log(data.items[i]);
-                // console.log('==============================');
                 var new_event = {}
                 new_event['calendar'] = calendar_id;
                 new_event['title'] = data.items[i].summary;
                 var start = data.items[i].start.dateTime;
-                new_event['start'] = start.substring(0,10) + ' ' + start.substring(11,16);
-                var end = data.items[i].end.dateTime;
-                new_event['end'] = end.substring(0,10) + ' ' + end.substring(11,16);
+                if (start) {
+                    new_event['start'] = start.substring(0,10) + ' ' + start.substring(11,16);
+                } else {
+                    today = new Date();
+                    new_event['start'] = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate() + ' 00:00:00';
 
-                // console.log(new_event);
+                }
+                var end = data.items[i].end.dateTime;
+                if (end) {
+                    new_event['end'] = end.substring(0,10) + ' ' + end.substring(11,16);
+                } else {
+                    today = new Date();
+                    new_event['end'] = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate() + ' 23:59:59';
+                }
+
                 events.push(new_event);
             }
         }
 
-        res.send({'events': events});
+        return_events();
+
     });
 
+    function return_events(){
+        if (total_calendars > 1) {
+            console.log(events);
+            total_calendars -= 1;
+        } else {
+            res.send({'events': events.sort(sort_events)});
+            events = [];
+            total_calendars = config.calendars.length;
+        }
+    }
+
+    function sort_events(event_1, event_2){
+        if (event_1.start < event_2.start) {
+            return -1;
+        } else if (event_1.start > event_2.start) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 }
+
 
 exports.getCalendars = function(req, res){
     if(!req.session.access_token) {
         return res.redirect('/auth');
     }
 
-    calendar_id = config.calendars[1];
-    console.log(calendar_id);
-    get_events(req, res);
+    for (var i=0; i < config.calendars.length; i++){
+        calendar_id = config.calendars[i];
+        get_events(calendar_id, req, res);
+    }
 
 }

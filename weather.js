@@ -45,8 +45,6 @@ exports.getWeather = function(req, res){
                 }
             };
             var json_weather = xm.load(xml);
-            console.log(json_weather);
-            console.log(json_weather.rss);
 
             // Today
             result['weather']['today']['temperature'] = json_weather.rss.channel.item.yweather$condition.temp;

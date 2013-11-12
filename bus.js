@@ -18,7 +18,6 @@ exports.getBuses = function(req, res){
     for( line in lines) {
         done += 1;
         options.path = '/service/publicXMLFeed?command=predictions&a=sf-muni&r=' + line + '&s=' + lines[line];
-        console.log(options.path);
         http.get(options, function(response) {
             var xml = '';
 
