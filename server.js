@@ -96,9 +96,10 @@ var SampleApp = function() {
         self.app = express();
         self.app.use('/static', express.static(__dirname + '/static'));
         self.app.use(passport.initialize());
-        self.app.use(express.cookieParser());
+        self.app.use(express.cookieParser(config.session_secret));
         self.app.use(express.bodyParser());
         self.app.use(express.session({ secret: config.session_secret }));
+        self.app.use(express.session({ cookie: { expires: false }}));
 
 
 
@@ -111,9 +112,14 @@ var SampleApp = function() {
         self.app.get('/auth/callback',  
           passport.authenticate('google', { session: false, failureRedirect: '/' }), 
             function(req, res) {  
-                req.session.access_token = req.user.accessToken; 
+                res.cookie('clark_token', req.user.accessToken);
                 res.redirect('/static/'); 
           }); 
+
+        // Root redirects to the "static" page
+        self.app.get('/', function(req, res) {
+            res.redirect('/static/');
+        });
 
     };
 

@@ -22,10 +22,10 @@ passport.use(new GoogleStrategy({
 
 exports.googleAuth = passport.authenticate('google', { session: false });
 
-exports.googleCallback = function(req, res) {  
-    req.session.access_token = req.user.accessToken; 
-    res.redirect('/calendar'); 
-}; 
+// exports.googleCallback = function(req, res) {  
+//     req.session.access_token = req.user.accessToken; 
+//     res.redirect('/calendar'); 
+// }; 
 
 function get_current_date(){
     var d = new Date();
@@ -51,7 +51,7 @@ var total_calendars = config.calendars.length;
 
 var get_events = function(calendar_id, req, res){
     //Create an instance from accessToken
-    var accessToken = req.session.access_token;
+    var accessToken = req.cookies.clark_token;
     var calendar_params = {
         maxResults: 10,
         timeMin: get_current_date(),
@@ -121,7 +121,7 @@ var get_events = function(calendar_id, req, res){
 
 
 exports.getCalendars = function(req, res){
-    if(!req.session.access_token) {
+    if(!req.cookies.clark_token) {
         return res.redirect('/auth');
     }
 
