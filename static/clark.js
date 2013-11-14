@@ -27,7 +27,7 @@ function updateEvents() {
     var event_template =
         '<div class="event-day">Today</div>' +
         '{{ #today }}' +
-        '<div class="event {{ calendar }}">' +
+        '<div class="event {{ calendar }}" style="{{ calendar_style }}">' +
         '   {{ #start }}<div class="event-date">{{ start }} / {{ end }}</div>{{ /start }}' +
         '   {{ ^start }}<div class="event-date">All day</div>{{ /start }}' +
         '   <div class="event-title">{{ title }}</div>' +
@@ -40,7 +40,7 @@ function updateEvents() {
         '{{ /today }}' +
         '<div class="event-day">Tomorrow</div>' +
         '{{ #tomorrow }}' +
-        '<div class="event {{ calendar }}">' +
+        '<div class="event {{ calendar }}" style="{{ calendar_style }}">' +
         '   {{ #start }}<div class="event-date">{{ start }} / {{ end }}</div>{{ /start }}' +
         '   {{ ^start }}<div class="event-date">All day</div>{{ /start }}' +
         '   <div class="event-title">{{ title }}</div>' +
@@ -68,6 +68,7 @@ function updateEvents() {
             e = data.events[i];
             event_data = {
                 'calendar': e.calendar,
+                'calendar_style': e.calendar_style,
                 'date': '',
                 'start': '',
                 'end': '',

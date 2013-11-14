@@ -22,11 +22,6 @@ passport.use(new GoogleStrategy({
 
 exports.googleAuth = passport.authenticate('google', { session: false });
 
-// exports.googleCallback = function(req, res) {  
-//     req.session.access_token = req.user.accessToken; 
-//     res.redirect('/calendar'); 
-// }; 
-
 function get_current_date(){
     var d = new Date();
     month = d.getMonth() + 1; // Months start at 0
@@ -71,6 +66,7 @@ var get_events = function(calendar_id, req, res){
             for(i in data.items){
                 var new_event = {}
                 new_event['calendar'] = calendar_id;
+                new_event['calendar_style'] = config.calendar_styles[calendar_id];
                 new_event['title'] = data.items[i].summary;
                 var start = data.items[i].start.dateTime;
                 if (start) {
