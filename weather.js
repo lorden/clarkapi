@@ -1,9 +1,14 @@
 var http    = require('http');
 var xm    = require('xml-mapping');
 exports.getWeather = function(req, res){
+    var unit = 'c';
+    if (req.query.u && req.query.u.toLowerCase() == 'f') {
+        unit = 'f';
+    }
+
     options = {
         host: 'weather.yahooapis.com',
-        path: '/forecastrss?w=12797160&u=c'
+        path: '/forecastrss?w=12797160&u=' + unit
     }
 
 

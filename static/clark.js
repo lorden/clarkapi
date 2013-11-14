@@ -143,8 +143,12 @@ function updateEvents() {
     });
 }
 
-function updateWeather() {
-    var tu = ' &deg;C';
+function updateWeather(unit=null) {
+    if (unit == null) {
+        var tu = ' &deg;C';
+    } else {
+        tu = '&deg;' + unit;
+    }
     var weather_template = 
         '<div class="small-4 columns" style="padding:0 0.5em 0 0">' +
         '<div class="weather-day widget">' +
@@ -158,7 +162,7 @@ function updateWeather() {
         '</div>' +
         '</div>';
     
-    $.getJSON(api_url + '/weather', function(data) {
+    $.getJSON(api_url + '/weather?u=' + unit, function(data) {
         $('#current-temperature').html('<span class="large">' + Math.round(data.weather.today.temperature) + '</span><span class="small">' + tu + '</span>'); 
         var currentTime = new Date ( );
         // Today
@@ -199,6 +203,23 @@ function updateWeather() {
         $('#clock').parent().parent().css('height', h);
         $('#clock').parent().parent().css('padding-top', parseInt(h)/4 + 'px');
     });
+
+
+    $('.widget .content').on('click', function() {
+        $(this).parent().addClass('flipped');
+    });
+    $('.widget .settings').on('click', function() {
+        $(this).parent().removeClass('flipped');
+    });
+
+    $('.farenheit').on('click', function(){
+        updateWeather('F');
+    });
+
+    $('.celsius').on('click', function(){
+        updateWeather('C');
+    });
+
 }
 
 function updateClock () {

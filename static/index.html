@@ -13,27 +13,37 @@
 <body>
   <div id="dashboard">
     <div class="row">
-      <div class="small-8 columns">
+      <div class="small-8 columns widget-container">
         <div class="row" id="weather"></div>
       </div>
-      <div class="small-4 columns last-column">
-        <div class="widget">
-          <div class="center">
-            <div id="clock"></div>
-            <div id="current-temperature"></div>
-          </div>
-          <div class="center">
-            <div id="day"></div>
-            <div id="special-day"></div>
-          </div>
+      <!-- Clock -->
+      <div class="small-4 columns last-column widget-container">
+        <div class="widget w2">
+          <div class="content">
+              <div class="center">
+                <div id="clock"></div>
+                <div id="current-temperature"></div>
+              </div>
+              <div class="center">
+                <div id="day"></div>
+                <div id="special-day"></div>
+              </div>
+         </div>
+         <div class="settings">
+           <div>
+                <span class="farenheit">&deg;F</span>
+                <span class="celsius">&deg;C</span>
+           </div>
+         </div>
         </div>
       </div>
+      <!-- End Clock -->
     </div>
     <div class="row">
-      <div class="small-6 columns first-column">
+      <div class="small-6 columns first-column widget-container">
         <div id="events" class="widget"></div>
       </div>
-      <div class="small-6 columns last-column">
+      <div class="small-6 columns last-column widget-container">
         <div id="bus" class="widget">
             <div id="2" class="bus_row">
                 <div class="bus_line">2</div>
