@@ -211,17 +211,22 @@ body {
 /* flipper */
 .widget-container {
     perspective: 1000;
+    -webkit-perspective: 1000;
 }
 
 .widget {
     transition: 0.6s;
+    -webkit-transition: 0.6s;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     position: relative;
 }
 
 .widget-container .content,
 .widget-container .settings {
-    backface-visibility: hidden;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden; /* Chrome and Safari */
+    -moz-backface-visibility:hidden; /* Firefox */
     position: absolute;
     top: 0;
     left: 0;
@@ -233,10 +238,12 @@ body {
 
 .widget-container .settings{
     transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
 }
 
 .widget-container .widget.flipped {
     transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
 }
 
 .icon {

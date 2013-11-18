@@ -143,8 +143,8 @@ function updateEvents() {
     });
 }
 
-function updateWeather(unit=null) {
-    if (unit == null) {
+function updateWeather(unit) {
+    if (typeof unit === 'undefined' || unit == null) {
         var tu = ' &deg;C';
     } else {
         tu = '&deg;' + unit;
