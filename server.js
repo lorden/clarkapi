@@ -112,7 +112,7 @@ var SampleApp = function() {
         self.app.get('/auth/callback',  
           passport.authenticate('google', { session: false, failureRedirect: '/' }), 
             function(req, res) {  
-                res.cookie('clark_token', req.user.accessToken);
+                res.cookie('clark_token', req.user.accessToken, { maxAge: 900000, httpOnly: false});
                 res.redirect('/static/'); 
           }); 
 

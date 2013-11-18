@@ -105,7 +105,7 @@ function updateEvents() {
             pedate = edate.getDate() + '/' + edate.getMonth();
             mins = edate.getMinutes() > 9 ? edate.getMinutes() : ('0' + edate.getMinutes())
             event_data.end = edate.getHours() + ':' + mins;
-            if (edate - sdate == 86400000){
+            if (edate - sdate == 86340000){
                 event_data.start = '';
                 event_data.end = '';
             }
@@ -202,6 +202,10 @@ function updateWeather(unit) {
         var h = $('.weather-day').eq(0).css('height');
         $('#clock').parent().parent().css('height', h);
         $('#clock').parent().parent().css('padding-top', parseInt(h)/4 + 'px');
+
+        // Set width of Clock
+        var w = $('#clock').parent().parent().width();
+        $('#clock').parent().parent().css('padding-left', ((w - $('#clock').width()) / 2) - 20 + 'px');
     });
 
 
