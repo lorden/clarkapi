@@ -210,9 +210,11 @@ function updateWeather(unit) {
 
 
     $('.widget .content').on('click', function() {
+        $(this).blur();
         $(this).parent().addClass('flipped');
     });
     $('.widget .settings').on('click', function() {
+        $(this).blur();
         $(this).parent().removeClass('flipped');
     });
 

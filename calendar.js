@@ -1,11 +1,11 @@
 var http    = require('http');
 var gcal = require('google-calendar');
 var config = require('./config')
-console.log(config);
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var passport = require('passport');
 var gcal     = require('google-calendar');
+var fs = require('fs');
 
 
 passport.use(new GoogleStrategy({
@@ -16,6 +16,9 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     profile.accessToken = accessToken;
+    fs.writeFile("gcal.auth", accessToken, function(err) {
+        console.log('Error writing token: ' + err);
+    });
     return done(null, profile);
   }
 ));
@@ -46,7 +49,7 @@ var total_calendars = config.calendars.length;
 
 var get_events = function(calendar_id, req, res){
     //Create an instance from accessToken
-    var accessToken = req.cookies.clark_token;
+    var accessToken = fs.readFileSync('gcal.auth').toString();
     var calendar_params = {
         maxResults: 10,
         timeMin: get_current_date(),
@@ -117,7 +120,9 @@ var get_events = function(calendar_id, req, res){
 
 
 exports.getCalendars = function(req, res){
-    if(!req.cookies.clark_token) {
+    try {
+        var accessToken = fs.readFileSync('gcal.auth').toString();
+    } catch(Exception) {
         return res.redirect('/auth');
     }
 

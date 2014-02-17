@@ -17,3 +17,5 @@ node_modules/*
 config.js
 *.deploy
 *.swp*
+
+gcal.auth
