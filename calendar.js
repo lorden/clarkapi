@@ -16,9 +16,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     profile.accessToken = accessToken;
-    fs.writeFile("gcal.auth", accessToken, function(err) {
-        console.log('Error writing token: ' + accessToken + ' - ' + err);
-    });
+    fs.writeFileSync("gcal.auth", accessToken);
     return done(null, profile);
   }
 ));
